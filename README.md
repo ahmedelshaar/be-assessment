@@ -1,58 +1,85 @@
-# Backend Assessment
+# Uptime Monitoring API
 
-Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.
+The Uptime Monitoring API is designed to enable authenticated users to monitor URLs and retrieve detailed uptime reports, including availability, average response time, and total uptime/downtime.
 
-## Overview
+## Environment Variables
 
-- Signup with email verification.
-- CRUD operations for URL checks (`GET`, `PUT` and `DELETE` can be called only by the user user who created the check).
-- Authenticated users can receive a notification whenever one of their URLs goes down or up again:
-  - Email.
-  - Webhook *(optional)*.
-- Authenticated users can get detailed uptime reports about their URLs availability, average response time, and total uptime/downtime.
-- Authenticated users can group their checks by tags and get reports by tag.
+To run this project, you will need to add the following environment variables to your .env file
 
-## Acceptance Criteria
+### Server Config
 
-- APIs should be consuming and producing `application/json`.
-- Authenication should be stateless.
-- Each URL check may have the following options:
-  - `name`: The name of the check.
-  - `url`: The URL to be monitored.
-  - `protocol`: The resource protocol name `HTTP`, `HTTPS`, or `TCP`.
-  - `path`: A specific path to be monitored *(optional)*.
-  - `port`: The server port number *(optional)*.
-  - `webhook`: A webhook URL to receive a notification on *(optional)*.
-  - `timeout` *(defaults to 5 seconds)*: The timeout of the polling request *(optional)*.
-  - `interval` *(defaults to 10 minutes)*: The time interval for polling requests *(optional)*.
-  - `threshold` *(defaults to 1 failure)*: The threshold of failed requests that will create an alert *(optional)*.
-  - `authentication`: An HTTP authentication header, with the Basic scheme, to be sent with the polling request *(optional)*.
-    - `authentication.username`
-    - `authentication.password`
-  - `httpHeaders`: A list of key/value pairs custom HTTP headers to be sent with the polling request (optional).
-  - `assert`: The response assertion to be used on the polling response (optional).
-    - `assert.statusCode`: An HTTP status code to be asserted.
-  - `tags`: A list of the check tags (optional).
-  - `ignoreSSL`: A flag to ignore broken/expired SSL certificates in case of using the HTTPS protocol.
-- Each report may have the following information:
-  - `status`: The current status of the URL.
-  - `availability`: A percentage of the URL availability.
-  - `outages`: The total number of URL downtimes.
-  - `downtime`: The total time, in seconds, of the URL downtime.
-  - `uptime`: The total time, in seconds, of the URL uptime.
-  - `responseTime`: The average response time for the URL.
-  - `history`: Timestamped logs of the polling requests.
+`PORT`: The port number on which the server will listen.
 
-## Evaluation Criteria
+`HOST`: The host address or hostname for the server.
 
-- Code quality.
-- Code scalability as we should be able to add a new alerting notification channel like Slack, Firebase, SMS, etc.. with the minimum possible changes.
-- Unit tests.
+`NODE_ENV`: The environment in which the server is running ( development, production).
 
-## Bonus
+### Database Config
 
-- API documentation.
-- Docker and Docker Compose.
-- [Pushover](https://pushover.net/) integration to receive alerts on mobile devices.
+`DATABASE_URL`: The URL or connection string for the database.
 
-Try your best to implement as much as you can from the given requirements and feel free to add more if you want to.
+`DATABASE_USERNAME`: The username for accessing the database.
+
+`DATABASE_PASSWORD`: The password for accessing the database.
+
+### Token Config
+
+`TOKEN_SECRET`: The secret key used to sign authentication tokens.
+
+`TOKEN_EXPIRE_IN`: The expiration duration for authentication tokens.
+
+### Email Config
+
+`EMAIL_HOST`: The hostname or IP address of the email server.
+
+`EMAIL_PORT`: The port number for the email server.
+
+`EMAIL_USERNAME`: The username for the email account.
+
+`EMAIL_PASSWORD`: The password for the email account.
+
+## Setup
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+### Running the Project without Docker
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+### Running the Project with Docker
+
+Build the Docker image
+
+```bash
+  docker build -t uptime-monitoring-app .
+```
+
+Run the Docker container
+
+```bash
+  docker run -p 3000:3000 uptime-monitoring-app
+```
+
+## Document API in Postman 
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/19175846-9b9e3952-a8d1-4b75-b353-add680985ace?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D19175846-9b9e3952-a8d1-4b75-b353-add680985ace%26entityType%3Dcollection%26workspaceId%3Dfad3576a-7f8e-4523-8da3-ee4241e0d192)
