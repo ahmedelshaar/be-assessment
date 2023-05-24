@@ -24,7 +24,7 @@ class CronJob {
     } = check;
 
     const client = axios.create({
-      baseURL: `${protocol}://${url}:${port}${path}`,
+      baseURL: `${protocol}://${url}:${port}`,
       timeout: timeout * 1000,
       auth: authentication,
       headers: httpHeaders,
@@ -88,7 +88,7 @@ class CronJob {
   }
 
   addTask(check) {
-    const task = cron.schedule(`*/${check.interval / 80} * * * *`, () => {
+    const task = cron.schedule(`*/${check.interval} * * * *`, () => {
       this.checkAvailabilityCallback(check);
     });
     this.taskMap[check._id] = task;
