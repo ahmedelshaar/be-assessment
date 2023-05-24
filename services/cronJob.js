@@ -34,12 +34,12 @@ class CronJob {
 
     const startTime = Date.now();
 
+    const report = await Report.findOne({ checkId: check._id });
+    
     try {
       const res = await client.get(path);
       const endTime = Date.now();
       const responseTime = endTime - startTime;
-
-      const report = await Report.findOne({ checkId: check._id });
 
       report.averageResponseTime =
         (report.averageResponseTime + responseTime) / 2;
@@ -56,7 +56,7 @@ class CronJob {
 
       await report.save();
     } catch (error) {
-      await this.handleFailure(error, startTime);
+      await this.handleFailure(error, startTime, report);
     }
   }
 
